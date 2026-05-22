@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Crear Cuenta | Solvitech Colombia</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00a859;
+            --primary-dark: #007a40;
+            --primary-light: #e6f7ef;
+            --dark: #1a1a1a;
+            --blue-text: #003366;
+            --white: #ffffff;
+            --error: #e74c3c;
+            --success: #00a859;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: #f0f4f8;
+            overflow-x: hidden;
+        }
+
+        /* ── NAVBAR ── */
+        .navbar {
+            background-color: var(--primary);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+        .navbar-brand {
+            color: white;
+            font-weight: 800;
+            font-size: 1.4rem;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        .navbar-brand:hover { color: rgba(255,255,255,0.85); }
+
+        /* ── FONDO DECORATIVO ── */
+        .register-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+        .register-wrapper::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(0,168,89,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(0,51,102,0.06) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .deco-circle {
+            position: fixed;
+            border-radius: 50%;
+            opacity: 0.06;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .deco-circle-1 { width: 400px; height: 400px; background: var(--primary); top: -100px; right: -100px; animation: floatA 8s ease-in-out infinite; }
+        .deco-circle-2 { width: 300px; height: 300px; background: var(--blue-text); bottom: -80px; left: -80px; animation: floatB 10s ease-in-out infinite; }
+        @keyframes floatA { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-20px)} }
+        @keyframes floatB { 0%,100%{transform:translateY(0)} 50%{transform:translateY(15px)} }
+
+        /* ── CARD ── */
+        .register-card {
+            position: relative;
+            z-index: 1;
+            background: white;
+            border-radius: 28px;
+            padding: 50px 45px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.10), 0 4px 15px rgba(0,168,89,0.08);
+            animation: slideUp 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── ENCABEZADO ── */
+        .register-logo { text-align: center; margin-bottom: 32px; }
+        .register-logo .logo-icon {
+            width: 72px; height: 72px;
+            background: var(--primary-light);
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            border: 2px solid rgba(0,168,89,0.15);
+        }
+        .register-logo .logo-icon i { font-size: 2rem; color: var(--primary); }
+        .register-logo h2 { font-size: 1.6rem; font-weight: 800; color: var(--blue-text); margin-bottom: 4px; }
+        .register-logo p { font-size: 0.85rem; color: #888; font-weight: 500; }
+
+        .divider { height: 1px; background: linear-gradient(to right, transparent, #e0e0e0, transparent); margin-bottom: 28px; }
+
+        /* ── FORMULARIO ── */
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-group { margin-bottom: 18px; }
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--blue-text);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .input-wrapper { position: relative; }
+        .input-wrapper i.icon-left {
+            position: absolute;
+            left: 16px; top: 50%;
+            transform: translateY(-50%);
+            color: #aaa; font-size: 0.95rem;
+            pointer-events: none;
+            transition: color 0.3s;
+        }
+        .input-wrapper input,
+        .input-wrapper select {
+            width: 100%;
+            padding: 14px 16px 14px 44px;
+            border: 2px solid #e8ecf0;
+            border-radius: 12px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--dark);
+            background: #fafbfc;
+            transition: var(--transition);
+            outline: none;
+            appearance: none;
+        }
+        .input-wrapper input:focus,
+        .input-wrapper select:focus {
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(0,168,89,0.08);
+        }
+        .input-wrapper input:focus ~ .icon-left { color: var(--primary); }
+        .input-wrapper input::placeholder { color: #bbb; font-weight: 400; }
+
+        .toggle-password {
+            position: absolute; right: 16px; top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer; color: #aaa;
+            font-size: 0.95rem; z-index: 2;
+            transition: color 0.3s;
+        }
+
+        /* Indicador fortaleza contraseña */
+        .password-strength { margin-top: 8px; }
+        .strength-bar {
+            height: 4px; border-radius: 4px;
+            background: #e8ecf0;
+            overflow: hidden; margin-bottom: 4px;
+        }
+        .strength-fill {
+            height: 100%; width: 0%;
+            border-radius: 4px;
+            transition: width 0.4s, background 0.4s;
+        }
+        .strength-text { font-size: 0.75rem; font-weight: 600; color: #aaa; }
+
+        /* ── ALERTAS ── */
+        .alert-box {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 18px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+        .alert-box.show { display: flex; }
+        .alert-error   { background: #fdf0ef; color: var(--error);   border: 1.5px solid #f5c6c2; }
+        .alert-success { background: var(--primary-light); color: var(--primary-dark); border: 1.5px solid rgba(0,168,89,0.25); }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }
+
+        /* ── BOTÓN ── */
+        .btn-register {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        .btn-register:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,168,89,0.35); }
+        .btn-register:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+        .btn-register .btn-text { display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-register .btn-loader { display: none; }
+        .btn-register.loading .btn-text { display: none; }
+        .btn-register.loading .btn-loader { display: flex; justify-content: center; }
+        .spinner {
+            width: 22px; height: 22px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── FOOTER CARD ── */
+        .card-footer-note {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 0.85rem;
+            color: #888;
+        }
+        .card-footer-note a { color: var(--primary); font-weight: 700; text-decoration: none; }
+        .card-footer-note a:hover { text-decoration: underline; }
+
+        /* ── FOOTER PÁGINA ── */
+        .footer-login {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.82rem;
+            color: #999;
+        }
+        .footer-login span { color: var(--primary); }
+
+        @media (max-width: 540px) {
+            .register-card { padding: 36px 24px; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a class="navbar-brand" href="index.html">
+            <i class="fas fa-bolt" style="margin-right:8px"></i>SOLVITECH
+        </a>
+    </nav>
+
+    <div class="deco-circle deco-circle-1"></div>
+    <div class="deco-circle deco-circle-2"></div>
+
+    <main class="register-wrapper">
+        <div class="register-card">
+
+            <div class="register-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <h2>Crear Cuenta</h2>
+                <p>Únete a Solvitech Colombia</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Alertas -->
+            <div class="alert-box alert-error" id="alertError">
+                <i class="fas fa-exclamation-circle"></i>
+                <span id="errorMsg">Error al registrar.</span>
+            </div>
+            <div class="alert-box alert-success" id="alertSuccess">
+                <i class="fas fa-check-circle"></i>
+                <span id="successMsg">¡Cuenta creada exitosamente!</span>
+            </div>
+
+            <!-- Formulario -->
+            <div id="registerForm">
+
+                <!-- Nombre y Teléfono -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-user mr-1"></i> Nombre completo</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="nombre" placeholder="Tu nombre" autocomplete="name">
+                            <i class="fas fa-user icon-left"></i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-phone mr-1"></i> Teléfono</label>
+                        <div class="input-wrapper">
+                            <input type="tel" id="telefono" placeholder="300 000 0000">
+                            <i class="fas fa-phone icon-left"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label><i class="fas fa-envelope mr-1"></i> Correo electrónico</label>
+                    <div class="input-wrapper">
+                        <input type="email" id="email" placeholder="correo@ejemplo.com" autocomplete="email">
+                        <i class="fas fa-envelope icon-left"></i>
+                    </div>
+                </div>
+
+                <!-- Ciudad -->
+                <div class="form-group">
+                    <label><i class="fas fa-map-marker-alt mr-1"></i> Ciudad</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="ciudad" placeholder="Cartagena" value="Cartagena">
+                        <i class="fas fa-map-marker-alt icon-left"></i>
+                    </div>
+                </div>
+
+                <!-- Contraseña -->
+                <div class="form-group">
+                    <label><i class="fas fa-lock mr-1"></i> Contraseña</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="password" placeholder="Mínimo 6 caracteres" oninput="checkStrength(this.value)">
+                        <i class="fas fa-lock icon-left"></i>
+                        <span class="toggle-password" onclick="togglePass('password','eye1')">
+                            <i class="fas fa-eye" id="eye1"></i>
+                        </span>
+                    </div>
+                    <div class="password-strength">
+                        <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+                        <span class="strength-text" id="strengthText"></span>
+                    </div>
+                </div>
+
+                <!-- Confirmar contraseña -->
+                <div class="form-group">
+                    <label><i class="fas fa-lock mr-1"></i> Confirmar contraseña</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="password2" placeholder="Repite tu contraseña">
+                        <i class="fas fa-lock icon-left"></i>
+                        <span class="toggle-password" onclick="togglePass('password2','eye2')">
+                            <i class="fas fa-eye" id="eye2"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Botón -->
+                <button class="btn-register" id="btnRegister" onclick="handleRegister()">
+                    <span class="btn-text"><i class="fas fa-user-plus"></i> Crear mi cuenta</span>
+                    <span class="btn-loader"><span class="spinner"></span></span>
+                </button>
+
+            </div>
+
+            <div class="card-footer-note">
+                ¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer-login">
+        © 2026 <span>Solvitech Colombia S.A.S.</span> — Todos los derechos reservados.
+    </footer>
+
+    <script>
+        const API = window.location.origin;
+
+        /* ── Mostrar/Ocultar contraseña ── */
+        function togglePass(inputId, iconId) {
+            const input = document.getElementById(inputId);
+            const icon  = document.getElementById(iconId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        /* ── Indicador de fortaleza ── */
+        function checkStrength(val) {
+            const fill = document.getElementById('strengthFill');
+            const text = document.getElementById('strengthText');
+            let score = 0;
+            if (val.length >= 6)  score++;
+            if (val.length >= 10) score++;
+            if (/[A-Z]/.test(val)) score++;
+            if (/[0-9]/.test(val)) score++;
+            if (/[^A-Za-z0-9]/.test(val)) score++;
+
+            const niveles = [
+                { pct: '0%',   color: '#e8ecf0', label: '' },
+                { pct: '25%',  color: '#e74c3c', label: 'Muy débil' },
+                { pct: '50%',  color: '#f39c12', label: 'Débil' },
+                { pct: '75%',  color: '#3498db', label: 'Buena' },
+                { pct: '90%',  color: '#00a859', label: 'Fuerte' },
+                { pct: '100%', color: '#007a40', label: '¡Excelente!' },
+            ];
+            const n = niveles[score] || niveles[0];
+            fill.style.width      = n.pct;
+            fill.style.background = n.color;
+            text.textContent      = n.label;
+            text.style.color      = n.color;
+        }
+
+        /* ── Registro ── */
+        async function handleRegister() {
+            const nombre   = document.getElementById('nombre').value.trim();
+            const telefono = document.getElementById('telefono').value.trim();
+            const email    = document.getElementById('email').value.trim();
+            const ciudad   = document.getElementById('ciudad').value.trim() || 'Cartagena';
+            const pass1    = document.getElementById('password').value;
+            const pass2    = document.getElementById('password2').value;
+            const btn      = document.getElementById('btnRegister');
+
+            hideAlerts();
+
+            // Validaciones
+            if (!nombre)          { showError('El nombre es obligatorio.'); return; }
+            if (!email)           { showError('El correo es obligatorio.'); return; }
+            if (!pass1)           { showError('Ingresa una contraseña.'); return; }
+            if (pass1.length < 6) { showError('La contraseña debe tener al menos 6 caracteres.'); return; }
+            if (pass1 !== pass2)  { showError('Las contraseñas no coinciden.'); return; }
+
+            btn.classList.add('loading');
+            btn.disabled = true;
+
+            try {
+                const res  = await fetch(API + '/api/registro', {
+                    method:  'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body:    JSON.stringify({ nombre, email, telefono, ciudad, password: pass1 })
+                });
+                const data = await res.json();
+
+                if (data.ok) {
+                    document.getElementById('successMsg').textContent =
+                        `¡Bienvenido ${nombre}! Tu cuenta fue creada. Redirigiendo...`;
+                    document.getElementById('alertSuccess').classList.add('show');
+                    btn.classList.remove('loading');
+
+                    setTimeout(() => { window.location.href = 'login.html'; }, 2000);
+                } else {
+                    btn.classList.remove('loading');
+                    btn.disabled = false;
+                    showError(data.mensaje || 'No se pudo crear la cuenta.');
+                }
+            } catch (err) {
+                btn.classList.remove('loading');
+                btn.disabled = false;
+                showError('No se pudo conectar al servidor. ¿Está corriendo app.py?');
+            }
+        }
+
+        /* ── Enter para enviar ── */
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') handleRegister();
+        });
+
+        function showError(msg) {
+            document.getElementById('errorMsg').textContent = msg;
+            const el = document.getElementById('alertError');
+            el.classList.remove('show');
+            void el.offsetWidth;
+            el.classList.add('show');
+        }
+        function hideAlerts() {
+            document.getElementById('alertError').classList.remove('show');
+            document.getElementById('alertSuccess').classList.remove('show');
+        }
+    </script>
+</body>
+</html>

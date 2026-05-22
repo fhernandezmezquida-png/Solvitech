@@ -1,0 +1,239 @@
+/* ==========================================================================
+   HOJA DE ESTILOS: SOLVITECH COLOMBIA S.A.S
+   Propósito: Adelanto de Proyecto - Diseño Unificado
+   ========================================================================== */
+
+/* 1. VARIABLES GLOBALES
+   Permiten cambiar el color de toda la web desde un solo lugar */
+:root { 
+    --primary: #00a859;        /* Verde Solvitech */
+    --primary-hover: #008445;
+    --dark: #1a1a1a;           /* Negro para textos y footer */
+    --white: #ffffff;
+    --light-bg: #f8f9fa;       /* Gris muy claro para fondos */
+    --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* 2. CONFIGURACIÓN BASE */
+body { 
+    font-family: 'Montserrat', sans-serif; 
+    color: var(--dark); 
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* 3. NAVEGACIÓN (HEADER) */
+.navbar {
+    background-color: var(--primary) !important;
+    padding: 1rem 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: var(--transition);
+}
+
+.navbar-brand h1 { 
+    font-weight: 800; 
+    font-size: 1.6rem; 
+    letter-spacing: 1.5px;
+    margin: 0;
+}
+
+/* 4. SECCIÓN HERO (BANNER PRINCIPAL) */
+.hero {
+    height: 75vh;
+    min-height: 500px;
+    background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), 
+                url('../img/header-bg.jpg') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.titulo-principal {
+    color: var(--primary) !important;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(2rem, 5vw, 3.5rem); /* Se adapta al tamaño de pantalla */
+    text-shadow: 2px 2px 20px rgba(0,0,0,0.8);
+    margin-bottom: 30px;
+}
+
+/* 5. BOTÓN PRINCIPAL (CONOCER MÁS) */
+.btn-conocer {
+    background-color: var(--white) !important;
+    color: var(--primary) !important;
+    border: 2px solid var(--white);
+    border-radius: 50px;
+    padding: 14px 45px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.btn-conocer:hover {
+    background-color: transparent !important;
+    color: var(--white) !important;
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 12px 25px rgba(59, 234, 152, 0.4); 
+}
+
+.btn-conocer {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+/* 6. TARJETAS DE MISIÓN Y VISIÓN */
+.proposito-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 45px 30px;
+    text-align: center;
+    border-bottom: 6px solid var(--primary);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: var(--transition);
+    height: 100%;
+}
+
+.proposito-card:hover { 
+    transform: translateY(-12px); 
+    box-shadow: 0 20px 40px rgba(0,168,89,0.15); 
+}
+
+.icon-box { 
+    font-size: 3.8rem; 
+    color: var(--primary); 
+    margin-bottom: 25px; 
+}
+
+/* 7. GRID DE GALERÍA (12 FOTOS) */
+.galeria-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 20px 0;
+}
+
+.foto-box {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    height: 300px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.foto-box img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    transition: var(--transition); 
+}
+
+.overlay-verde {
+    position: absolute;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background: rgba(0, 168, 89, 0.9); /* Verde corporativo con opacidad */
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center;
+    opacity: 0; 
+    transition: var(--transition); 
+    color: var(--white); 
+    padding: 20px;
+    text-align: center;
+}
+
+.foto-box:hover .overlay-verde { 
+    opacity: 1; 
+}
+
+.foto-box:hover img { 
+    transform: scale(1.15); 
+}
+
+/* 8. UTILIDADES */
+.section-padding { 
+    padding: 90px 0; 
+}
+
+.bg-custom-light {
+    background-color: var(--light-bg);
+}
+
+.text-primary-custom {
+    color: var(--primary) !important;
+}
+
+/* 9. RESPONSIVE (Ajustes para móviles) */
+@media (max-width: 768px) {
+    .titulo-principal { font-size: 2.2rem; }
+    .hero { height: 60vh; }
+    .section-padding { padding: 60px 0; }
+}
+
+/* --- NUEVOS ESTILOS SOLVITECH --- */
+
+/* Efecto mejorado para el botón principal */
+.btn-conocer:hover {
+    background-color: transparent !important;
+    color: var(--white) !important;
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 12px 25px rgba(0, 168, 89, 0.4);
+}
+
+.btn-conocer {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+
+.card-servicio {
+    transition: var(--transition);
+    border-radius: 15px;
+}
+
+.card-servicio:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+}
+
+.redes-footer a {
+    transition: var(--transition);
+    display: inline-block;
+}
+
+.redes-footer a:hover {
+    color: var(--primary) !important;
+    transform: scale(1.2);
+}
+
+.footer-grande p {
+    font-size: 0.95rem;
+    opacity: 0.8;
+}
+
+/* ... (todo tu código anterior) ... */
+
+/* 9. RESPONSIVE (Ajustes para móviles) */
+@media (max-width: 768px) {
+    .titulo-principal { font-size: 2.2rem; }
+    .hero { height: 60vh; }
+    .section-padding { padding: 60px 0; }
+}
+
+/* ==========================================================================
+   NUEVAS SECCIONES DE DETALLES (PRODUCTOS)
+   ========================================================================== */
+
+.d-none {
+    display: none !important;
+}
+
+#detalle-solar, #detalle-electrica, #detalle-capacitacion {
+    padding-top: 100px; /* Evita que el navbar fijo tape el título */
+    min-height: 80vh;   /* Asegura que la sección ocupe casi toda la pantalla */
+    background-color: var(--white);
+}

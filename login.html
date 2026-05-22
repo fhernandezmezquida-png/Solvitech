@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Iniciar Sesión | Solvitech Colombia</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00a859;
+            --primary-dark: #007a40;
+            --primary-light: #e6f7ef;
+            --dark: #1a1a1a;
+            --blue-text: #003366;
+            --white: #ffffff;
+            --error: #e74c3c;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: #f0f4f8;
+            overflow-x: hidden;
+        }
+
+        /* ── NAVBAR ── */
+        .navbar {
+            background-color: var(--primary);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+        .navbar-brand {
+            color: white;
+            font-weight: 800;
+            font-size: 1.4rem;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        .navbar-brand:hover { color: rgba(255,255,255,0.85); text-decoration: none; }
+
+        /* ── MAIN LAYOUT ── */
+        .login-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        /* Fondo decorativo */
+        .login-wrapper::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(0,168,89,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(0,51,102,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 80%, rgba(0,168,89,0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Elementos decorativos flotantes */
+        .deco-circle {
+            position: fixed;
+            border-radius: 50%;
+            opacity: 0.06;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .deco-circle-1 {
+            width: 400px; height: 400px;
+            background: var(--primary);
+            top: -100px; right: -100px;
+            animation: floatA 8s ease-in-out infinite;
+        }
+        .deco-circle-2 {
+            width: 300px; height: 300px;
+            background: var(--blue-text);
+            bottom: -80px; left: -80px;
+            animation: floatB 10s ease-in-out infinite;
+        }
+        .deco-circle-3 {
+            width: 150px; height: 150px;
+            background: var(--primary);
+            bottom: 20%; right: 10%;
+            opacity: 0.04;
+            animation: floatA 12s ease-in-out infinite reverse;
+        }
+
+        @keyframes floatA {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.03); }
+        }
+        @keyframes floatB {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(15px) scale(0.97); }
+        }
+
+        /* ── CARD ── */
+        .login-card {
+            position: relative;
+            z-index: 1;
+            background: white;
+            border-radius: 28px;
+            padding: 50px 45px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.10), 0 4px 15px rgba(0,168,89,0.08);
+            animation: slideUp 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Logo / Encabezado */
+        .login-logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .login-logo .logo-icon {
+            width: 72px; height: 72px;
+            background: var(--primary-light);
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            border: 2px solid rgba(0,168,89,0.15);
+        }
+        .login-logo .logo-icon i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+        .login-logo h2 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--blue-text);
+            margin-bottom: 4px;
+        }
+        .login-logo p {
+            font-size: 0.85rem;
+            color: #888;
+            font-weight: 500;
+        }
+
+        /* Divisor */
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #e0e0e0, transparent);
+            margin-bottom: 28px;
+        }
+
+        /* ── FORMULARIO ── */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--blue-text);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+        .input-wrapper i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            pointer-events: none;
+        }
+        .input-wrapper input {
+            width: 100%;
+            padding: 14px 16px 14px 44px;
+            border: 2px solid #e8ecf0;
+            border-radius: 12px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--dark);
+            background: #fafbfc;
+            transition: var(--transition);
+            outline: none;
+        }
+        .input-wrapper input:focus {
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(0,168,89,0.08);
+        }
+        .input-wrapper input:focus + i,
+        .input-wrapper input:focus ~ i { color: var(--primary); }
+        .input-wrapper input::placeholder { color: #bbb; font-weight: 400; }
+
+        /* Icono ojo para contraseña */
+        .toggle-password {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #aaa;
+            font-size: 0.95rem;
+            pointer-events: all !important;
+            z-index: 2;
+            transition: color 0.3s;
+        }
+        .toggle-password:hover { color: var(--primary); }
+
+        /* Opciones extra */
+        .form-extras {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+            margin-top: -6px;
+        }
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        .remember-me input[type="checkbox"] {
+            width: 16px; height: 16px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+        .remember-me span {
+            font-size: 0.82rem;
+            color: #666;
+            font-weight: 600;
+        }
+        .forgot-link {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .forgot-link:hover { color: var(--primary-dark); text-decoration: underline; }
+
+        /* Botón de login */
+        .btn-login {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-login:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,168,89,0.35);
+        }
+        .btn-login:active { transform: translateY(0); }
+        .btn-login .btn-loader {
+            display: none;
+        }
+        .btn-login.loading .btn-text { display: none; }
+        .btn-login.loading .btn-loader { display: inline-block; }
+
+        /* Spinner */
+        .spinner {
+            display: inline-block;
+            width: 18px; height: 18px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Mensaje de error */
+        .alert-error {
+            display: none;
+            background: #fff0ef;
+            border: 1.5px solid var(--error);
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            font-size: 0.83rem;
+            color: var(--error);
+            font-weight: 600;
+            align-items: center;
+            gap: 10px;
+            animation: shake 0.4s ease;
+        }
+        .alert-error.show { display: flex; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%       { transform: translateX(-8px); }
+            40%       { transform: translateX(8px); }
+            60%       { transform: translateX(-5px); }
+            80%       { transform: translateX(5px); }
+        }
+
+        /* Mensaje de éxito */
+        .alert-success {
+            display: none;
+            background: var(--primary-light);
+            border: 1.5px solid var(--primary);
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            font-size: 0.83rem;
+            color: var(--primary-dark);
+            font-weight: 600;
+            align-items: center;
+            gap: 10px;
+        }
+        .alert-success.show { display: flex; }
+
+        /* Footer de la card */
+        .card-footer-note {
+            margin-top: 28px;
+            text-align: center;
+            font-size: 0.82rem;
+            color: #999;
+            font-weight: 500;
+        }
+        .card-footer-note a {
+            color: var(--primary);
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .card-footer-note a:hover { text-decoration: underline; }
+
+        /* ── FOOTER ── */
+        .footer-login {
+            background: var(--dark);
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            padding: 18px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+        .footer-login span { color: var(--primary); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 480px) {
+            .login-card { padding: 36px 24px; }
+            .login-logo h2 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a class="navbar-brand" href="index.html">
+            <i class="fas fa-bolt mr-2"></i>SOLVITECH
+        </a>
+    </nav>
+
+    <!-- Decoración -->
+    <div class="deco-circle deco-circle-1"></div>
+    <div class="deco-circle deco-circle-2"></div>
+    <div class="deco-circle deco-circle-3"></div>
+
+    <!-- MAIN -->
+    <main class="login-wrapper">
+        <div class="login-card">
+
+            <!-- Logo / Encabezado -->
+            <div class="login-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-solar-panel"></i>
+                </div>
+                <h2>Bienvenido</h2>
+                <p>Ingresa a tu cuenta de Solvitech Colombia</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Alertas -->
+            <div class="alert-error" id="alertError">
+                <i class="fas fa-exclamation-circle"></i>
+                <span id="errorMsg">Usuario o contraseña incorrectos.</span>
+            </div>
+            <div class="alert-success" id="alertSuccess">
+                <i class="fas fa-check-circle"></i>
+                <span>¡Inicio de sesión exitoso! Redirigiendo...</span>
+            </div>
+
+            <!-- Formulario -->
+            <div id="loginForm">
+                <!-- Usuario -->
+                <div class="form-group">
+                    <label for="usuario"><i class="fas fa-user mr-1"></i> Usuario o Correo</label>
+                    <div class="input-wrapper">
+                        <input
+                            type="text"
+                            id="usuario"
+                            placeholder="correo@ejemplo.com"
+                            autocomplete="username"
+                        >
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+
+                <!-- Contraseña -->
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock mr-1"></i> Contraseña</label>
+                    <div class="input-wrapper">
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="••••••••"
+                            autocomplete="current-password"
+                        >
+                        <i class="fas fa-lock"></i>
+                        <span class="toggle-password" id="togglePass" title="Mostrar/Ocultar contraseña">
+                            <i class="fas fa-eye" id="eyeIcon"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Recordar / Olvidé -->
+                <div class="form-extras">
+                    <label class="remember-me">
+                        <input type="checkbox" id="remember">
+                        <span>Recordarme</span>
+                    </label>
+                    <a href="#" class="forgot-link" id="forgotLink">¿Olvidaste tu contraseña?</a>
+                </div>
+
+                <!-- Botón -->
+                <button class="btn-login" id="btnLogin" onclick="handleLogin()">
+                    <span class="btn-text"><i class="fas fa-sign-in-alt mr-2"></i>Ingresar</span>
+                    <span class="btn-loader"><span class="spinner"></span></span>
+                </button>
+            </div>
+
+            <!-- Footer de la card -->
+            <div class="card-footer-note">
+                ¿No tienes cuenta? <a href="registro.html">Regístrate gratis</a>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer-login">
+        © 2026 <span>Solvitech Colombia S.A.S.</span> — Todos los derechos reservados.
+    </footer>
+
+    <script>
+        const API = window.location.origin;
+
+        /* ── Mostrar/Ocultar contraseña ── */
+        document.getElementById('togglePass').addEventListener('click', function() {
+            const input = document.getElementById('password');
+            const icon  = document.getElementById('eyeIcon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        });
+
+        /* ── Cargar usuario recordado ── */
+        window.addEventListener('load', function() {
+            const saved = localStorage.getItem('sv_usuario');
+            if (saved) {
+                document.getElementById('usuario').value = saved;
+                document.getElementById('remember').checked = true;
+            }
+        });
+
+        /* ── Enter para login ── */
+        ['usuario','password'].forEach(id => {
+            document.getElementById(id).addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') handleLogin();
+            });
+        });
+
+        /* ── Olvidé contraseña ── */
+        document.getElementById('forgotLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            showError('Para recuperar tu contraseña, contáctanos: solvitechcolombia@gmail.com');
+        });
+
+        /* ── Lógica de Login (conectada a PostgreSQL via Flask) ── */
+        async function handleLogin() {
+            const usuarioInput  = document.getElementById('usuario').value.trim();
+            const passwordInput = document.getElementById('password').value;
+            const btn           = document.getElementById('btnLogin');
+
+            hideAlerts();
+
+            if (!usuarioInput) { showError('Por favor ingresa tu usuario o correo.'); return; }
+            if (!passwordInput) { showError('Por favor ingresa tu contraseña.'); return; }
+
+            btn.classList.add('loading');
+            btn.disabled = true;
+
+            try {
+                const res  = await fetch(API + '/api/login', {
+                    method:  'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body:    JSON.stringify({ usuario: usuarioInput, password: passwordInput })
+                });
+                const data = await res.json();
+
+                if (data.ok) {
+                    // ✅ Login exitoso — guardar sesión
+                    if (document.getElementById('remember').checked) {
+                        localStorage.setItem('sv_usuario', usuarioInput);
+                    } else {
+                        localStorage.removeItem('sv_usuario');
+                    }
+                    sessionStorage.setItem('sv_sesion', JSON.stringify({
+                        usuario: usuarioInput,
+                        nombre:  data.nombre,
+                        rol:     data.rol,
+                        activo:  true
+                    }));
+
+                    document.getElementById('alertSuccess').classList.add('show');
+                    btn.classList.remove('loading');
+
+                    setTimeout(function() {
+                        window.location.href = 'index.html';
+                    }, 1500);
+                } else {
+                    // ❌ Login fallido
+                    btn.classList.remove('loading');
+                    btn.disabled = false;
+                    showError(data.mensaje || 'Usuario o contraseña incorrectos.');
+
+                    ['usuario','password'].forEach(id => {
+                        const el = document.getElementById(id);
+                        el.style.borderColor = 'var(--error)';
+                        setTimeout(() => el.style.borderColor = '', 2000);
+                    });
+                }
+            } catch (err) {
+                btn.classList.remove('loading');
+                btn.disabled = false;
+                showError('No se pudo conectar al servidor. ¿Está corriendo app.py?');
+            }
+        }
+
+        function showError(msg) {
+            document.getElementById('errorMsg').textContent = msg;
+            const el = document.getElementById('alertError');
+            el.classList.remove('show');
+            void el.offsetWidth;
+            el.classList.add('show');
+        }
+
+        function hideAlerts() {
+            document.getElementById('alertError').classList.remove('show');
+            document.getElementById('alertSuccess').classList.remove('show');
+        }
+    </script>
+</body>
+</html>
